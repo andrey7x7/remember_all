@@ -31,17 +31,17 @@ public:
     QHash<QPoint, BrickItem*> brickMap;
     int blockW = 16;
     int blockH = 16;
+    bool press;
 
 public slots:
+    void clearMap();
     void setMap();
     void addCoor(QPoint pos);
-    void saveMap(QHash<QPoint, BrickItem*> map);
+    void saveMap();
     void readFile();
-
-private slots:
-    void on_saveAction_triggered();
-
-    void on_readAction_triggered();
+    void pressPos();
+    void releasePos();
+    void movePos(QPoint pos);
 
 private:
     Ui::MainWindow *ui;

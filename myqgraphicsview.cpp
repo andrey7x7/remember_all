@@ -14,3 +14,16 @@ void MyQGraphicsView::mousePressEvent(QMouseEvent *event)
     emit presPos(event->pos());
     QGraphicsView::mousePressEvent(event); // Вызвать родительскую функцию для дальнейшей обработки
 }
+
+void MyQGraphicsView::mouseReleaseEvent(QMouseEvent *event)
+{
+    emit releasePos();
+    QGraphicsView::mouseReleaseEvent(event); // Вызвать родительскую функцию для дальнейшей обработки
+}
+
+void MyQGraphicsView::mouseMoveEvent(QMouseEvent *event)
+{
+    emit movePos(event->pos());
+    QGraphicsView::mouseMoveEvent(event); // Вызвать родительскую функцию для дальнейшей обработки
+}
+

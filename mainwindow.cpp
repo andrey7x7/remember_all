@@ -6,11 +6,25 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    press = false;
     scene = new QGraphicsScene(ui->graphicsView);
     ui->graphicsView->setSceneRect(0,0,ui->graphicsView->width()-5,ui->graphicsView->height()-5);
     ui->graphicsView->setScene(scene);
-    //setMap();
+
     connect(ui->graphicsView, &MyQGraphicsView::presPos, this, &MainWindow::addCoor);
+    connect(ui->graphicsView, &MyQGraphicsView::presPos, this, &MainWindow::pressPos);
+    connect(ui->graphicsView, &MyQGraphicsView::releasePos, this, &MainWindow::releasePos);
+    connect(ui->graphicsView, &MyQGraphicsView::movePos, this, &MainWindow::movePos);
+
+    connect(ui->mapOn, &QAction::triggered, this, &MainWindow::setMap);
+    connect(ui->saveAction, &QAction::triggered, this, &MainWindow::saveMap);
+    connect(ui->readAction, &QAction::triggered, this, &MainWindow::readFile);
+    connect(ui->clear, &QAction::triggered, this, &MainWindow::clearMap);
+}
+
+// Определение функции qHash для использования QPoint в QHash
+uint qHash(const QPoint &point, uint seed = 0) {
+     return qHash(point.x(), seed) ^ qHash(point.y(), seed); // Используем хеширование координат
 }
 
 void MainWindow::setMap(){
@@ -18,6 +32,29 @@ void MainWindow::setMap(){
         for(int q=0; q<600-blockH; q+=blockH){
             scene->addRect(i, q, blockW, blockH);
         }
+    }
+}
+
+void MainWindow::clearMap()
+{
+    brickMap.clear();
+    scene->clear();
+}
+
+void MainWindow::pressPos()
+{
+    press = true;
+}
+
+void MainWindow::releasePos()
+{
+    press = false;
+}
+
+void MainWindow::movePos(QPoint pos)
+{
+    if(press){
+        addCoor(pos);
     }
 }
 
@@ -30,15 +67,17 @@ void MainWindow::addCoor(QPoint pos){
         scene->addItem(brick);
     }
     else{
-        scene->removeItem(brickMap.take(position));
-        brickMap.remove(position);
+        if(!press){
+            scene->removeItem(brickMap.take(position));
+            brickMap.remove(position);
+        }
     }
 }
 
-void MainWindow::saveMap(QHash<QPoint, BrickItem*> map)
+void MainWindow::saveMap()
 {
     QHash<QPoint, TypeObject> myMap;
-    for(QPoint point : map.keys()){
+    for(QPoint point : brickMap.keys()){
         myMap.insert(point, TypeObject::Brick);
     }
     QFile fileOut("hash.dat");
@@ -74,26 +113,9 @@ void MainWindow::readFile(){
     }
 }
 
-
-// Определение функции qHash для использования QPoint в QHash
-uint qHash(const QPoint &point, uint seed = 0) {
-     return qHash(point.x(), seed) ^ qHash(point.y(), seed); // Используем хеширование координат
-}
-
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-
-void MainWindow::on_saveAction_triggered()
-{
-    saveMap(brickMap);
-}
-
-
-void MainWindow::on_readAction_triggered()
-{
-    readFile();
-}
 

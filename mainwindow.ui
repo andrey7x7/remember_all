@@ -43,8 +43,16 @@
     </property>
     <addaction name="saveAction"/>
     <addaction name="readAction"/>
+    <addaction name="clear"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Карта</string>
+    </property>
+    <addaction name="mapOn"/>
    </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="saveAction">
@@ -55,6 +63,16 @@
   <action name="readAction">
    <property name="text">
     <string>Загрузить</string>
+   </property>
+  </action>
+  <action name="clear">
+   <property name="text">
+    <string>Очистить</string>
+   </property>
+  </action>
+  <action name="mapOn">
+   <property name="text">
+    <string>Включить сетку</string>
    </property>
   </action>
  </widget>
