@@ -10,6 +10,7 @@
 #include <QDataStream>
 #include "myqgraphicsview.h"
 #include "brickitem.h"
+#include "heroitem.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,18 +21,25 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
     enum TypeObject {
+        Hero,
         Brick,
         Tree,
         Food
     };
 
+private:
+    Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QHash<QPoint, BrickItem*> brickMap;
+    QHash<QPoint, QGraphicsItem*> brickMap;
     int blockW = 16;
     int blockH = 16;
     bool press;
+    HeroItem *hero;
+
 
 public slots:
     void clearMap();
@@ -43,8 +51,8 @@ public slots:
     void releasePos();
     void movePos(QPoint pos);
 
-private:
-    Ui::MainWindow *ui;
-    QGraphicsScene *scene;
+protected:
+   void keyPressEvent(QKeyEvent *event);
+   void keyReleaseEvent(QKeyEvent *event);
 };
 #endif // MAINWINDOW_H

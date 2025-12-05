@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     brickitem.cpp \
+    heroitem.cpp \
     main.cpp \
     mainwindow.cpp \
     myqgraphicsview.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     brickitem.h \
+    heroitem.h \
     mainwindow.h \
     myqgraphicsview.h \
     scenemap.h

@@ -97,6 +97,7 @@ void MainWindow::readFile(){
     if (fileIn.open(QIODevice::ReadOnly)) {
         QDataStream in(&fileIn);
         in >> loadedHash; // Десериализуем QHash
+        loadedHash.insert(QPoint(0,0),TypeObject::Hero);
         fileIn.close();
         ui->statusbar->showMessage("Карта загружена из hash.dat", 10000);
         qDebug() << "Loaded hash:" << loadedHash;
@@ -107,10 +108,26 @@ void MainWindow::readFile(){
                 brickMap.insert(point, brick);
                 scene->addItem(brick);
             }
+            if(loadedHash.value(point) == TypeObject::Hero){
+                hero = new HeroItem(blockW,blockH);
+                hero->setPos(point);
+                brickMap.insert(point, hero);
+                scene->addItem(hero);
+            }
         }
     } else {
         qDebug() << "Error opening file for reading";
     }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    hero->keyPress(event);
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+
 }
 
 MainWindow::~MainWindow()
