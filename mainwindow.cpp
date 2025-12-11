@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setSceneRect(0,0,ui->graphicsView->width()-5,ui->graphicsView->height()-5);
     ui->graphicsView->setScene(scene);
 
+    this->width = ui->graphicsView->width();
+    this->heigh = ui->graphicsView->height();
+
     connect(ui->graphicsView, &MyQGraphicsView::presPos, this, &MainWindow::addCoor);
     connect(ui->graphicsView, &MyQGraphicsView::presPos, this, &MainWindow::pressPos);
     connect(ui->graphicsView, &MyQGraphicsView::releasePos, this, &MainWindow::releasePos);
@@ -28,8 +31,8 @@ uint qHash(const QPoint &point, uint seed = 0) {
 }
 
 void MainWindow::setMap(){
-    for(int i=0; i<800-blockW; i+=blockW){
-        for(int q=0; q<600-blockH; q+=blockH){
+    for(int i=0; i<width-blockW; i+=blockW){
+        for(int q=0; q<heigh-blockH; q+=blockH){
             scene->addRect(i, q, blockW, blockH);
         }
     }
@@ -61,7 +64,7 @@ void MainWindow::movePos(QPoint pos)
 void MainWindow::addCoor(QPoint pos){
     QPoint position ((pos.rx()/blockW)*blockW, (pos.ry()/blockW)*blockW);
     if(!brickMap.contains(position)){
-        BrickItem *brick = new BrickItem(blockW,blockH);
+        BrickItem *brick = new BrickItem(TypeEnums::TypeObject::Brick,blockW,blockH);
         brick->setPos(position);
         brickMap.insert(position, brick);
         scene->addItem(brick);
@@ -76,9 +79,9 @@ void MainWindow::addCoor(QPoint pos){
 
 void MainWindow::saveMap()
 {
-    QHash<QPoint, TypeObject> myMap;
+    QHash<QPoint, TypeEnums::TypeObject> myMap;
     for(QPoint point : brickMap.keys()){
-        myMap.insert(point, TypeObject::Brick);
+        myMap.insert(point, TypeEnums::TypeObject::Brick);
     }
     QFile fileOut("hash.dat");
     if (fileOut.open(QIODevice::WriteOnly)) {
@@ -92,23 +95,23 @@ void MainWindow::saveMap()
 }
 
 void MainWindow::readFile(){
-    QHash<QPoint, TypeObject> loadedHash;
+    QHash<QPoint, TypeEnums::TypeObject> loadedHash;
     QFile fileIn("hash.dat");
     if (fileIn.open(QIODevice::ReadOnly)) {
         QDataStream in(&fileIn);
         in >> loadedHash; // Десериализуем QHash
-        loadedHash.insert(QPoint(0,0),TypeObject::Hero);
+        loadedHash.insert(QPoint(0,0),TypeEnums::TypeObject::Hero);
         fileIn.close();
         ui->statusbar->showMessage("Карта загружена из hash.dat", 10000);
         qDebug() << "Loaded hash:" << loadedHash;
         for(QPoint point : loadedHash.keys()){
-            if(loadedHash.value(point) == TypeObject::Brick){
-                BrickItem *brick = new BrickItem(blockW,blockH);
+            if(loadedHash.value(point) == TypeEnums::TypeObject::Brick){
+                BrickItem *brick = new BrickItem(loadedHash.value(point),blockW,blockH);
                 brick->setPos(point);
                 brickMap.insert(point, brick);
                 scene->addItem(brick);
             }
-            if(loadedHash.value(point) == TypeObject::Hero){
+            if(loadedHash.value(point) == TypeEnums::TypeObject::Hero){
                 hero = new HeroItem(blockW,blockH);
                 hero->setPos(point);
                 brickMap.insert(point, hero);

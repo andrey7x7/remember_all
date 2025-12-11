@@ -1,6 +1,6 @@
 #include "brickitem.h"
 
-BrickItem::BrickItem(int width, int heigh)
+BrickItem::BrickItem(TypeEnums::TypeObject type, int width, int heigh)
 {
     this->width=width;
     this->heigh=heigh;

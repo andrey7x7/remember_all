@@ -6,7 +6,7 @@ HeroItem::HeroItem(int width, int heigh)
 
     this->width=width;
     this->heigh=heigh;
-
+    this->setType(TypeEnums::TypeObject::Hero);
     stepX = 0;
     stepY = 0;
 
@@ -16,7 +16,7 @@ HeroItem::HeroItem(int width, int heigh)
 
 void HeroItem::stepTimer()
 {
-    setPos(pos().rx()+16*stepX, pos().ry()+16*stepY);
+    setPos(pos().rx()+step*stepX, pos().ry()+step*stepY);
 }
 
 void HeroItem::keyPress(QKeyEvent *event)

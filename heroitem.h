@@ -1,22 +1,20 @@
 #ifndef HEROITEM_H
 #define HEROITEM_H
 
-#include <QGraphicsItem>
-#include <QObject>
-#include <QWidget>
-#include <QPainter>
 #include <QTimer>
 #include <QKeyEvent>
+#include "objectItem.h"
 
-class HeroItem : public QObject, public QGraphicsItem
+class HeroItem : public ObjectItem
 {
     Q_OBJECT
 public:
-    HeroItem(int width,int heigh);
+    HeroItem(int width, int heigh);
 
 private:
     int width;
     int heigh;
+    int step = 32;
     int stepX;
     int stepY;
     QTimer timer_step;

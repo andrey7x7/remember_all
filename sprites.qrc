@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/sprites/land">
+        <file>sprites/land.jpeg</file>
+        <file>sprites/obj.jpeg</file>
+    </qresource>
+</RCC>

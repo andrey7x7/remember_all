@@ -1,33 +1,24 @@
 #ifndef BRICKITEM_H
 #define BRICKITEM_H
 
-#include <QGraphicsItem>
-#include <QObject>
-#include <QWidget>
-#include <QPainter>
-#include <QDebug>
+#include "objectItem.h"
 
-class BrickItem : public QObject, public QGraphicsItem
+class BrickItem : public ObjectItem
 {
     Q_OBJECT
 
 public:
-    BrickItem(int width,int heigh);
+    BrickItem(TypeEnums::TypeObject type, int width, int heigh);
 
 private:
-    int width;
-    int heigh;
-    QRectF boundingRect() const{
-
-        return QRectF (0,0,width,heigh);
-    };
-
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
     {
+        QPixmap *spriteImage = new QPixmap(":/sprites/land/sprites/obj.jpeg"); // Загружаем изображение спрайта в QPixmap
         painter->setPen(Qt::black);
         painter->setBrush(Qt::red);
 
-        painter->drawRect(0,0,width,heigh);
+        painter->drawPixmap(0,0, *spriteImage, 0, 160, 32, 32);
+        //painter->drawRect(0,0,width,heigh);
         Q_UNUSED(option);
         Q_UNUSED(widget);
     };

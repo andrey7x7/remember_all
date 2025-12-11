@@ -8,6 +8,8 @@
 #include <QHash>
 #include <QFile>
 #include <QDataStream>
+#include "objectItem.h"
+#include "typeenums.h"
 #include "myqgraphicsview.h"
 #include "brickitem.h"
 #include "heroitem.h"
@@ -20,13 +22,6 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    enum TypeObject {
-        Hero,
-        Brick,
-        Tree,
-        Food
-    };
-
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
@@ -34,9 +29,11 @@ private:
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QHash<QPoint, QGraphicsItem*> brickMap;
-    int blockW = 16;
-    int blockH = 16;
+    QHash<QPoint, ObjectItem*> brickMap;
+    int blockW = 32;
+    int blockH = 32;
+    int width = 800;
+    int heigh = 600;
     bool press;
     HeroItem *hero;
 
