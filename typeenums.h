@@ -11,6 +11,9 @@ public:
         Hero,
         Brick,
         Tree,
+        Spruce,
+        Jug,
+        Road,
         Food
     };
 

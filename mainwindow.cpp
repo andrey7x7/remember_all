@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->saveAction, &QAction::triggered, this, &MainWindow::saveMap);
     connect(ui->readAction, &QAction::triggered, this, &MainWindow::readFile);
     connect(ui->clear, &QAction::triggered, this, &MainWindow::clearMap);
+//[=](bool force=true){ keepTrack(force); }
+    connect(ui->brick, &QAction::triggered, this, [=](TypeEnums::TypeObject force=TypeEnums::TypeObject::Brick) {typeObject(force);});
+    connect(ui->road, &QAction::triggered, this, [=](TypeEnums::TypeObject force=TypeEnums::TypeObject::Road) {typeObject(force);});
+    connect(ui->spruce, &QAction::triggered, this, [=](TypeEnums::TypeObject force=TypeEnums::TypeObject::Spruce) {typeObject(force);});
+    connect(ui->jug, &QAction::triggered, this, [=](TypeEnums::TypeObject force=TypeEnums::TypeObject::Jug) {typeObject(force);});
 }
 
 // Определение функции qHash для использования QPoint в QHash
@@ -36,6 +41,15 @@ void MainWindow::setMap(){
             scene->addRect(i, q, blockW, blockH);
         }
     }
+}
+
+void MainWindow::typeObject(TypeEnums::TypeObject type)
+{
+    ui->brick->setChecked(false);
+    ui->road->setChecked(false);
+    ui->spruce->setChecked(false);
+    ui->jug->setChecked(false);
+    this->type=type;
 }
 
 void MainWindow::clearMap()
@@ -64,7 +78,7 @@ void MainWindow::movePos(QPoint pos)
 void MainWindow::addCoor(QPoint pos){
     QPoint position ((pos.rx()/blockW)*blockW, (pos.ry()/blockW)*blockW);
     if(!brickMap.contains(position)){
-        BrickItem *brick = new BrickItem(TypeEnums::TypeObject::Brick,blockW,blockH);
+        BrickItem *brick = new BrickItem(type,blockW,blockH);
         brick->setPos(position);
         brickMap.insert(position, brick);
         scene->addItem(brick);

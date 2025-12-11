@@ -51,8 +51,18 @@
     </property>
     <addaction name="mapOn"/>
    </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>Тип объекта</string>
+    </property>
+    <addaction name="brick"/>
+    <addaction name="spruce"/>
+    <addaction name="jug"/>
+    <addaction name="road"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="saveAction">
@@ -73,6 +83,38 @@
   <action name="mapOn">
    <property name="text">
     <string>Включить сетку</string>
+   </property>
+  </action>
+  <action name="brick">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Кирпич</string>
+   </property>
+  </action>
+  <action name="spruce">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Ель</string>
+   </property>
+  </action>
+  <action name="jug">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Кувшин</string>
+   </property>
+  </action>
+  <action name="road">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Дорога</string>
    </property>
   </action>
  </widget>

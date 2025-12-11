@@ -36,6 +36,7 @@ public:
     int heigh = 600;
     bool press;
     HeroItem *hero;
+    TypeEnums::TypeObject type;
 
 
 public slots:
@@ -47,7 +48,7 @@ public slots:
     void pressPos();
     void releasePos();
     void movePos(QPoint pos);
-
+    void typeObject(TypeEnums::TypeObject type);
 protected:
    void keyPressEvent(QKeyEvent *event);
    void keyReleaseEvent(QKeyEvent *event);
