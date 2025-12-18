@@ -8,6 +8,7 @@
 #include <QHash>
 #include <QFile>
 #include <QDataStream>
+#include <QTimer>
 #include "objectItem.h"
 #include "typeenums.h"
 #include "myqgraphicsview.h"
@@ -25,13 +26,14 @@ class MainWindow : public QMainWindow
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+    QTimer timerCollides;
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QHash<QPoint, ObjectItem*> brickMap;
-    int blockW = 32;
-    int blockH = 32;
+    int blockW = 64;
+    int blockH = 64;
     int width = 800;
     int heigh = 600;
     bool press;
@@ -49,6 +51,8 @@ public slots:
     void releasePos();
     void movePos(QPoint pos);
     void typeObject(TypeEnums::TypeObject type);
+    void searchCollides();
+
 protected:
    void keyPressEvent(QKeyEvent *event);
    void keyReleaseEvent(QKeyEvent *event);

@@ -17,28 +17,22 @@ private:
     int step = 32;
     int stepX;
     int stepY;
+    int frame = 0;
+    int stepFrame = 137;
+    int rowFrame = 0;
     QTimer timer_step;
-
-    QRectF boundingRect() const{
-
-        return QRectF (0,0,width,heigh);
-    };
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-    {
-        painter->setPen(Qt::black);
-        painter->setBrush(Qt::green);
-
-        painter->drawRect(0,0,width,heigh);
-        Q_UNUSED(option);
-        Q_UNUSED(widget);
-    };
+    QTimer timer_frame;
+    TypeEnums::Direction direction = TypeEnums::Direction::Right;
 
 public slots:
     void keyPress(QKeyEvent *event);
+    void breackCollides();
 
 private  slots:
     void stepTimer();
+    void frameTimer();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const;
 
 };
 

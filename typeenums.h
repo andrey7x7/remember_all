@@ -17,6 +17,13 @@ public:
         Food
     };
 
+    enum Direction {
+        Up,
+        Down,
+        Left,
+        Right
+    };
+
 };
 
 #endif // TYPEENUMS_H

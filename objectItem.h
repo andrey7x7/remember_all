@@ -16,7 +16,7 @@ class ObjectItem : public QObject, public QGraphicsItem
 protected:
     int width;
     int heigh;
-    TypeEnums::TypeObject type;
+
 
 private:
     QRectF boundingRect() const{
@@ -24,6 +24,7 @@ private:
     };
 
 public:
+    TypeEnums::TypeObject type;
     TypeEnums::TypeObject getType(){
         return type;
     }
