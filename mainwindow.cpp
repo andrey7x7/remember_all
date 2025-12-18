@@ -96,10 +96,11 @@ void MainWindow::addCoor(QPoint pos){
 void MainWindow::saveMap()
 {
     QHash<QPoint, TypeEnums::TypeObject> myMap;
-    myMap.insert(QPoint(0,0),TypeEnums::TypeObject::Hero);
+
     for(QPoint point : brickMap.keys()){
         myMap.insert(point, brickMap.value(point)->type);
     }
+    myMap.insert(QPoint(0,0),TypeEnums::TypeObject::Hero);
     QFile fileOut("hash.dat");
     if (fileOut.open(QIODevice::WriteOnly)) {
         QDataStream out(&fileOut);

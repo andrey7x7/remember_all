@@ -25,7 +25,7 @@ void HeroItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 {
     QPixmap *spriteImage = new QPixmap(":/sprites/land/sprites/anim_cat.png"); // Загружаем изображение спрайта в QPixmap
     painter->drawPixmap(8, 8, width, heigh, *spriteImage, 106+stepFrame*frame, 33+rowFrame, 128, 128);
-    painter->drawRect(QRectF(0,0,width,heigh));
+    //painter->drawRect(QRectF(0,0,width,heigh));
     Q_UNUSED(option);
     Q_UNUSED(widget);
 };

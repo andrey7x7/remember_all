@@ -13,7 +13,7 @@ public:
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
     {
-        QPixmap *spriteImage = new QPixmap(":/sprites/land/sprites/obj.jpeg"); // Загружаем изображение спрайта в QPixmap
+        QPixmap *spriteImage = new QPixmap(":/sprites/land/sprites/obj.png"); // Загружаем изображение спрайта в QPixmap
         painter->setPen(Qt::black);
         painter->setBrush(Qt::red);
 
